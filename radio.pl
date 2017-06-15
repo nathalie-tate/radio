@@ -16,99 +16,95 @@ my @podcasts;						#string[]
 my $currentEpisode; 		#int
 my $currentPodcast; 		#int
 
-
-#DEBUG
-$PODCASTDIR = "~/podcasts/";
-
 sub getEpisodes
 {
-	system("ls -lrt $PODCASTDIR$PODCAST |cut -f 9 -d ' ' > episodes.txt");
-	open EPISODES,"<","episodes.txt"  or die;
-	@episodes = <EPISODES>;
+  system("ls -lrt $PODCASTDIR$PODCAST |cut -f 9 -d ' ' > episodes.txt");
+  open EPISODES,"<","episodes.txt"  or die;
+  @episodes = <EPISODES>;
 
-	for my $i (@episodes)
-	{
-		$episodes[$i] = trim($episodes[$i]);
-	}
+  for my $i (@episodes)
+  {
+    $episodes[$i] = trim($episodes[$i]);
+  }
 
-	$currentEpisode = @episodes - 1;
-	close EPISODES;
+  $currentEpisode = @episodes - 1;
+  close EPISODES;
 }
 
 sub getPodcasts
 {
-	system("ls -lrt $PODCASTDIR |cut -f 9 -d ' ' > podcasts.txt");
-	open PODCASTS,"<","podcasts.txt"  or die;
-	@podcasts = <PODCASTS>;
+  system("ls -lrt $PODCASTDIR |cut -f 9 -d ' ' > podcasts.txt");
+  open PODCASTS,"<","podcasts.txt"  or die;
+  @podcasts = <PODCASTS>;
 
-	for my $i (@podcasts)
-	{
-		$podcasts[$i] = trim($podcasts[$i]);
-	}
+  for my $i (@podcasts)
+  {
+    $podcasts[$i] = trim($podcasts[$i]);
+  }
 
-	$currentPodcast = @podcasts - 1;
-	$PODCAST = $podcasts[$currentPodcast];
-	close PODCASTS;
+  $currentPodcast = @podcasts - 1;
+  $PODCAST = $podcasts[$currentPodcast];
+  close PODCASTS;
 }
 
 sub sync
 {
-	getPodcasts;
-	system("gpo download");
-	getEpisodes;
+  getPodcasts;
+  system("gpo download");
+  getEpisodes;
 }
 
 sub play
 {
-	system("mpg123 $PODCASTDIR$PODCAST$episodes[$currentEpisode]");
+  system("mpg123 $PODCASTDIR$PODCAST$episodes[$currentEpisode]");
 }
 
 sub nextPodcast
 {
-	if ($currentPodcast != @podcasts -1)
-	{
-		$currentPodcast++;
-	}
-	$PODCAST = $podcasts[$currentPodcast];
-	getEpisodes;
-	play;
+  if ($currentPodcast != @podcasts -1)
+  {
+    $currentPodcast++;
+  }
+  $PODCAST = $podcasts[$currentPodcast];
+  getEpisodes;
+  play;
 }
 
 sub prevPodcast
 {
-	if ($currentPodcast != 0)
-	{
-		$currentPodcast--;
-	}
-	$PODCAST = $podcasts[$currentPodcast];
-	getEpisodes;
-	play;
+  if ($currentPodcast != 0)
+  {
+    $currentPodcast--;
+  }
+  $PODCAST = $podcasts[$currentPodcast];
+  getEpisodes;
+  play;
 }
 
 sub nextEpisode
 {
-	if ($currentEpisode != @episodes -1)
-	{
-		$currentEpisode++;
-		play;
-	}
+  if ($currentEpisode != @episodes -1)
+  {
+    $currentEpisode++;
+    play;
+  }
 }
 
 sub prevEpisode
 {
-	if ($currentEpisode != 0)
-	{
-		$currentEpisode--;
-		play;
-	}
+  if ($currentEpisode != 0)
+  {
+    $currentEpisode--;
+    play;
+  }
 }
 
 #utitlity function
 sub trim
 {
-	my $s = shift;
-	$s =~ s/^\s+|\s+$//g;
-	return $s
+  my $s = shift;
+  $s =~ s/^\s+|\s+$//g;
+  return $s
 }
 
 ### MAIN
@@ -118,11 +114,6 @@ my $input;
 
 while( $input != "q")
 {
-	$input = <>;
-	$input = trim($input);
-
-
-
-
-
+  $input = <>;
+  $input = trim($input);
 }
