@@ -10,11 +10,11 @@ use warnings;
 #set this to the directory that contains your podcasts
 my $PODCASTDIR = "~/gPodder/Downloads/";
 
-my $PODCAST; 						#string, dir name of current podcast
-my @episodes;						#string[]
-my @podcasts;						#string[]
-my $currentEpisode; 		#int
-my $currentPodcast; 		#int
+my $PODCAST;                #string, dir name of current podcast
+my @episodes;               #string[]
+my @podcasts;               #string[]
+my $currentEpisode;         #int
+my $currentPodcast;         #int
 
 sub getEpisodes
 {
